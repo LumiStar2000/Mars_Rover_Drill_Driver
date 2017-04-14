@@ -1,18 +1,4 @@
- //runTheseMotors[0] = augerHeight
- const int AUGER_MOTOR = 0; //motor on pins 1-4.
- const long MAX_REVOLUTIONS = 25;
- const long MAX_AUGER_STEPS = (stepsPerRevolution * MAX_REVOLUTIONS);// 25 full turns.
 
- //the extraction constant should be set to the specific drill.
- // this should not change unless you change drills (or miscalculated it to begin with)
- const double AUGER_REVOLUTIONS_TO_EXTRACTION = 2.5;
- const long AUGER_EXTRACTION_POSITION = (long)(stepsPerRevolution * AUGER_REVOLUTIONS_TO_EXTRACTION);
-
- bool augerEndstop = false;
- long stepsSinceEndstop = 0;
- // theSurface is initially set to be when the drill is fully unsheathed.
- long theSurface = (long)(AUGER_LENGTH * stepsPerRevolution);  //see alignWithMagnet for AUGER_LENGTH.
- 
 
  //moves auger to the top.  Returns true if endstop was reached before max turns.
  //  max turns is hard coded to be 6 full revolutions.

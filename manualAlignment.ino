@@ -16,9 +16,6 @@
 //  pin[1] : down/out direction
 //  pin[2] : next motor.  
 
-//this is how long (ms) you have to hold button[3] down to skip an alignment step.
-//anything less than this results in skipping a step (possibly unbeknownst to the user)
-const int MANUAL_DELAY = 500;
 
 bool manualAlignment() {
   

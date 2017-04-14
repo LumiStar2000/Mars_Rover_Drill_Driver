@@ -1,21 +1,3 @@
-const int CORE_ARM_MOTOR = 4; // pins 16-19
-const long CORE_EXTRACT_DISTANCE_PER_ROTATION = 30;//units???
-const double CORE_EXTRACT_ARM_TOTAL_ROTATIONS = 2.5;
-const long CORE_EXTRACT_ARM_LENGTH = (long)(CORE_EXTRACT_ARM_TOTAL_ROTATIONS * stepsPerRevolution * CORE_EXTRACT_DISTANCE_PER_ROTATION);
-long coreExtractArmPosition = 0; //0 = extract position.  positive means it's moving away from the auge
-bool coreArmEndstop = false;
-//MOTOR_FORWARD means AWAY from the auger.
-
-//method lists for compiling
-bool coreExtractArmIn();
-void coreExtractArmIn(bool);
-void coreExtractArmOut(bool);
-bool coreExtractArmOut();
-bool moveExtractionArmOneStep(bool);
-bool moveExtractionArmOneStepNoDelay(bool);
-bool coreArmAtExtractionPoint();
-bool coreArmNotAtMaxDistance();
-bool coreArmAtExtractPosition();
 
 //moves the core extraction arm into extraction position
 // returns false if the movement failed.

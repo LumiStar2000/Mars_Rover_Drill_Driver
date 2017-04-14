@@ -1,7 +1,3 @@
-int sparesArmPosition = 0; //start it at 0.  forward is ++
-const int MAXIMUM_ARM_ROTATION = stepsPerRevolution / 3; //360 degrees, into a slice of pie.
-const int CORE_PLATE_ARM_MOTOR = 2;
-
 
 bool sparesPlateArmOneStepNoDelay(bool forward) {
   dir[CORE_PLATE_ARM_MOTOR] = forward;

@@ -1,5 +1,4 @@
-const int DRILL_MOTOR = 1; //pins 4-7
-int drillPosition = 0;
+
 
 //rotates the drill one step.  returns false is drill is fully sheathed.
 //must be used in combination with other movements and at least one delay.

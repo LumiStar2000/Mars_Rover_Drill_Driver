@@ -1,23 +1,5 @@
-//declares copied from other files to enable compiling.
-bool rotateDrill(bool,long);
-bool rotateDrillOneStepNoDelay(bool);
-bool moveAugerOneStep(bool);
-bool hallSensorActive();
-bool moveAugerDown(long);
 
 
-  //maybe rotate auger 2pi then move it a couple MM up.  idea was voted down by group
-  //maybe rotate auger and move it slowly, covering the same area in a cool spiral looking fashion.
-  //  2nd idea was voted up by group
-  //shaft length.  
- const long AUGER_LENGTH = 10; //number of revolutions to fully unsheath.
-//sets initial cleaning position to halfway sheathed.
-const long AUGER_INITIAL_CLEANING_POSITION = AUGER_LENGTH / 0.5;
-//how far the auger travels every full revolution.
-const long AUGER_DISTANCE_PER_REVOLUTION = 3; //units???
-
-//now calculates how far down the shaft from the top the cleaning position is.
-const long AUGER_CLEANING_POSITION = AUGER_INITIAL_CLEANING_POSITION * AUGER_DISTANCE_PER_REVOLUTION * stepsPerRevolution;
 
 
 //rotates the drill and moves the auger up or down, depending on "forward".

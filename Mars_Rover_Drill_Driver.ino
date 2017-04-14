@@ -1,5 +1,5 @@
-// See methodsAndGlobals.ino for Full Documentation and credits.
-
+// See readme.ino for Full Documentation and credits.
+#include "readme.h"
 //     Mars Rover Drill Driver 
 //          Version: v0.2b
 //      Last edited: 04/12/17
@@ -13,7 +13,7 @@
 
 //DESCRIPTION:
 //  Drives a custom drill.  Design specs can be found at [insert site here].
-//  Full documentation and credits can be found in methodsAndGlobals.ino.
+//  Full documentation and credits can be found in readme.txt.
 
 
 //REQIREMENTS:
@@ -26,30 +26,10 @@
 //  See documentation file.
 
 
-//------ ALIGNMENT BUTTONS -----
-// BUTTON PINS ARE ON 28,29,30
-const int alignmentButtonPin[] = {28,29,30};
-//----END ALIGNMENT BUTTONS ----
 
 
-//----- SOLENOID GLOBALS -----
-// SOLENOID PINS ON 22, 23
-const int solenoidPin[] = {22, 23};
-bool solenoid[] = {false, false}; //solenoid[0], solenoid[1].  off by default.
-//--- END SOLENOID GLOBALS ---
 
-// ----- MOTOR GLOBALS -----
-// MOTOR PINS ON 0-19
-const int numMotors = 5; //maximum motors attached.  If adjusted from 5, check all code.
-const long stepsPerRevolution = 4096;
-int _step[] = {0,0,0,0,0}; //current step.  Initialized for 5 motors.
-const bool MOTOR_FORWARD = false; //change this if the motor direction is otherwise.  Forward is assumed to be up.
-bool dir[] = {MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORWARD}; //forward/back.  Initialized for 5 motors.
-//must declare this higher up in the higherarchy.
-//false is clockwise.  true is counterclockwise (VERIFY THIS)
-// ----- END MOTOR GLOBALS -----
 
-bool coreExtractArmIn();
 
 
 //Note: You don't have to run all 5 motors.  If you call false/0 for a motor, it won't activate during that step.

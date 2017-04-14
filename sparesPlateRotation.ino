@@ -1,5 +1,4 @@
-int currentPosition = 0;
-const int CORE_PLATE_MOTOR = 3;
+
   //runTheseMotors[3] = corePlateRotate
 
 //rotates the spares plate one step

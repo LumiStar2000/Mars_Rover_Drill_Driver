@@ -1,4 +1,5 @@
 //Reference guide for drillDriver_v0.2b
+//  Replaces the global declare file.
 
 //Updated 4/13/2017.
 //Created 4/12/2017.
@@ -31,17 +32,10 @@
 //  02. METHODS
 //       All methods.  USE CAUTION.
 
-//  03. MOTORS_ONLY
-//       Methods and Globals to use when programming automated movement.
-
-//  04. METHODS_FOR_MAIN
-//       Methods explicitly created to organize a set of steps to run 
-//       inside the main loop or setup.
-
-//  05. ALIGNMENT_STEPS
+//  03. ALIGNMENT_STEPS
 //       Full pinout/alignment process with notes.
 
-//  06. POWER_SETUP
+//  04. POWER_SETUP
 //       Power setup should be last, 
 //         after you've read the alignment steps fully,
 //         and setup the data/motor/button pins.
@@ -161,6 +155,7 @@ long coreExtractArmPosition = 0; //0 = extract position.  positive means it's mo
 bool coreArmEndstop = false;
 //drillRotation
 const int DRILL_MOTOR = 1; //pins 4-7
+int drillPosition = 0;
 //magneticDriver
 int  hallSensorPin  =  A0;   
 int  sensorValue =  0; 
@@ -172,7 +167,7 @@ const int MANUAL_DELAY = 500;
 const int AUGER_MOTOR = 0; //motor on pins 0-3.
 const long MAX_REVOLUTIONS = 25;
 const long MAX_AUGER_STEPS = (stepsPerRevolution * MAX_REVOLUTIONS);// 25 full turns.
-const double AUGER_REVOLUTIONS_TO_EXTRACTION = 2.5
+const double AUGER_REVOLUTIONS_TO_EXTRACTION = 2.5;
 const long AUGER_EXTRACTION_POSITION = (long)(stepsPerRevolution * AUGER_REVOLUTIONS_TO_EXTRACTION);
 bool augerEndstop = false;
 long stepsSinceEndstop = 0;
@@ -182,6 +177,8 @@ const int lateralStepsPerStep = 7; //tan(1/7) = 8.13 degrees.
 const bool moveDrillDownwards = true;
 const long MAX_CLEANING_ROTATIONS = 10; // 10 rotations max. 
 const long MAX_CLEANING_STEPS = stepsPerRevolution * MAX_CLEANING_ROTATIONS / (long)lateralStepsPerStep;
+long AUGER_CLEANING_HEIGHT = stepsPerRevolution * AUGER_LENGTH /2;
+long AUGER_CLEANING_ROTATION = 0;
 //sparesPlateArm
 int sparesArmPosition = 0; //start it at 0.  forward is ++
 const int MAXIMUM_ARM_ROTATION = stepsPerRevolution / 3; // 360/3 degrees, into a slice of pie.
@@ -248,7 +245,7 @@ void moveAugerUp(bool buttonPressed);
 void moveAugerDown(bool buttonPressed);
 void setTheSurface();
 long getAugerCurrentPosition();
-bool moveAugerToExtractionPosition()
+bool moveAugerToExtractionPosition();
 bool moveAugerToTheSurface();
 bool augerAtTop();
 //restoreDrill
@@ -265,7 +262,7 @@ void sparesPlateArmAway(bool buttonPressed);
 bool sparesPlateRotateOneStepNoDelay(bool forward);
 bool sparesPlateRotateOneStep(bool forward);
 void sparesPlateForward(bool buttonPressed);
-void sparesPlateBackward(bool buttonPressed)
+void sparesPlateBackward(bool buttonPressed);
 void setCurrentPlatePosition(int pos); 
 int getCurrentPlatePosition();
 //stepperDriver
@@ -281,59 +278,7 @@ void rotate(double motorSpeed[], int steps);
 
 
 
-
-
-// 03. MOTORS_ONLY
-const int AUGER_MOTOR = 0; //motor on pins 0-3.
-const int DRILL_MOTOR = 1; //pins 4-7
-const int CORE_PLATE_ARM_MOTOR = 2; //pins 8-11
-const int CORE_PLATE_MOTOR = 3; //pins 12-15
-const int CORE_ARM_MOTOR = 4; // pins 16-19
-
-//Auger Vertical Position:
-bool moveAugerUp();
-bool moveAugerUp(long steps);
-bool moveAugerDown(long steps);
-bool moveAugerOneStep(bool forward);
-//Auger Drill Rotation:
-bool rotateDrill(bool forward, long steps);
-bool rotateDrillOneStep(bool forward);
-//Core Plate Arm:
-bool sparesPlateArmOneStep(bool forward);
-//Core Plate Rotation:
-int getCurrentPlatePosition();
-bool sparesPlateRotateOneStep(bool forward);
-//Core Extraction Arm:
-bool coreExtractArmIn();
-bool coreExtractArmOut();
-bool coreArmAtExtractionPoint();
-bool moveExtractionArmOneStep(bool forward);
-
-
-
-
-
-
-
-
-
-
-// 04. METHODS_FOR_MAIN
-bool cleanDrill ();
-bool manualAlignment(); 
-bool alignAugerWithMagnet();
-
-
-
-
-
-
-
-
-
-
-
-// 05. ALIGNMENT_STEPS
+// 03. ALIGNMENT_STEPS
 
 // -- PIN SETUP: --
 //  0 - 3 : AUGER_MOTOR
@@ -404,7 +349,7 @@ bool alignAugerWithMagnet();
 
 
 
-// 06. POWER_SETUP
+// 04. POWER_SETUP
 
 // URGENT: Read section 5 before attempting any of these connections.
 // -- PIN SETUP: --

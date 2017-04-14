@@ -8,17 +8,6 @@
 // angle of threads: 8.19 degrees
 // angle of movement: 8.13 degrees.
 
-const int lateralStepsPerStep = 7; //tan(1/7) = 8.13 degrees.
-const bool moveDrillDownwards = true;
-const long MAX_CLEANING_ROTATIONS = 10; // 10 rotations max. 
-// calculates the amount of steps needed to revolve the full cleaning process.
-// then divides it by the number of discrete steps.
-const long MAX_CLEANING_STEPS = stepsPerRevolution * MAX_CLEANING_ROTATIONS / (long)lateralStepsPerStep;
-
-long AUGER_CLEANING_HEIGHT = stepsPerRevolution * AUGER_LENGTH /2;
-long AUGER_CLEANING_ROTATION = 0;
-  
-
 //returns true if cleaning succeeded, false if it failed.
 //we should probably begin skipping steps if any of the previous steps failed.
 bool cleanDrill (){
