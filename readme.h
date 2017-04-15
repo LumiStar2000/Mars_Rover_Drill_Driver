@@ -131,6 +131,7 @@
 
 //-- Main --
 //  Alignment Buttons Pins 28,29,30
+//  Talking points:  Efficiency of the code, use of const for optimization.
 const int alignmentButtonPin[] = {28,29,30};
 //  Solenoid Pins 22, 23
 const int solenoidPin[] = {22, 23};
@@ -142,13 +143,15 @@ int _step[] = {0,0,0,0,0};
 const bool MOTOR_FORWARD = false; //forward is up.
 bool dir[] = {MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORWARD}; 
 //alignWithMagnet
-const long AUGER_LENGTH = 10; //number of revolutions to fully unsheathe.  
-const long AUGER_INITIAL_CLEANING_POSITION = AUGER_LENGTH / 0.5;
-const long AUGER_DISTANCE_PER_REVOLUTION = 3; //units???
+const double AUGER_PITCH_HEIGHT = 0.125; //pitch dia in inches
+const double AUGER_TOTAL_HEIGHT = 10; //height in inches
+const double AUGER_LENGTH = AUGER_TOTAL_HEIGHT / AUGER_PITCH_HEIGHT; //number of revolutions (maximum)
+const long AUGER_INITIAL_CLEANING_POSITION = AUGER_LENGTH * 0.5;  //number of revolutions to the cleaning position (from top)
+const long AUGER_DISTANCE_PER_REVOLUTION = 3; //pitch diameter in inches(? TODO check calculations)
 const long AUGER_CLEANING_POSITION = AUGER_INITIAL_CLEANING_POSITION * AUGER_DISTANCE_PER_REVOLUTION * stepsPerRevolution;
 //coreExtractor
 const int CORE_ARM_MOTOR = 4; // pins 16-19
-const long CORE_EXTRACT_DISTANCE_PER_ROTATION = 30;//units???
+const long CORE_EXTRACT_DISTANCE_PER_ROTATION = 30;//pitch diameter in inches(? TODO check calculations).
 const double CORE_EXTRACT_ARM_TOTAL_ROTATIONS = 2.5;
 const long CORE_EXTRACT_ARM_LENGTH = (long)(CORE_EXTRACT_ARM_TOTAL_ROTATIONS * stepsPerRevolution * CORE_EXTRACT_DISTANCE_PER_ROTATION);
 long coreExtractArmPosition = 0; //0 = extract position.  positive means it's moving away from the auger
@@ -165,13 +168,13 @@ int  readNum = 0;
 const int MANUAL_DELAY = 500;
 //moveAuger
 const int AUGER_MOTOR = 0; //motor on pins 0-3.
-const long MAX_REVOLUTIONS = 25;
+const long MAX_REVOLUTIONS = AUGER_LENGTH;
 const long MAX_AUGER_STEPS = (stepsPerRevolution * MAX_REVOLUTIONS);// 25 full turns.
-const double AUGER_REVOLUTIONS_TO_EXTRACTION = 2.5;
-const long AUGER_EXTRACTION_POSITION = (long)(stepsPerRevolution * AUGER_REVOLUTIONS_TO_EXTRACTION);
+const double AUGER_REVOLUTIONS_TO_EXTRACTION = AUGER_LENGTH * 0.2 ; //number of revolutions to the extraction position. (from top)
+const long AUGER_EXTRACTION_POSITION = (long)(stepsPerRevolution * AUGER_REVOLUTIONS_TO_EXTRACTION); //steps to extraction position.
 bool augerEndstop = false;
 long stepsSinceEndstop = 0;
-long theSurface = (long)(AUGER_LENGTH * stepsPerRevolution); 
+long theSurface = (long)(AUGER_LENGTH * stepsPerRevolution * 0.8 ); //number of steps to the surface. 
 //restoreDrill
 const int lateralStepsPerStep = 7; //tan(1/7) = 8.13 degrees.
 const bool moveDrillDownwards = true;
