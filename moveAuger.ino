@@ -175,11 +175,26 @@ bool moveAugerToExtractionPosition(){
   }
   //move it down if it's too far up.
   while(stepsSinceEndstop < AUGER_EXTRACTION_POSITION){
-    if(!moveAugerOneStep(!MOTOR_FORWARD)){return false;};
+    if(!moveAugerOneStep(!MOTOR_FORWARD)){return false;}
   }
   //if all is right, this should be true.
   //if the lengths don't match, it'll be false.
   return (stepsSinceEndstop == AUGER_EXTRACTION_POSITION);
+}
+
+//moves the auger to the cleaning position.
+// returns true if it ended in said position.
+bool moveAugerToCleaningPosition(){
+  //move it up if it's too far down.
+  while(stepsSinceEndstop > AUGER_CLEANING_POSITION)  {
+    if(!moveAugerOneStep(MOTOR_FORWARD)) {return false;}
+  }
+  //move it down if its too far up.
+  while(stepsSinceEndstop < AUGER_CLEANING_POSITION) {
+    if(!moveAugerOneStep(!MOTOR_FORWARD)) {return false;}
+  }
+
+  return (stepsSinceEndstop == AUGER_CLEANING_POSITION);
 }
 
 
@@ -191,4 +206,5 @@ bool moveAugerToExtractionPosition(){
   }
   return false;
 }
+
 

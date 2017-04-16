@@ -7,11 +7,11 @@
 //  I recommend setting this value between 3 and 5.
 //  returns true if auger movement was successful.
 bool rotateDrillAndMoveAuger(bool forward, long stepsBeforeLateral){
-  //to speed this up, we'll only run a delay on the steps before the last.
   rotateDrill(forward, stepsBeforeLateral - 1); //rotates drill with delay to n-1 steps
   rotateDrillOneStepNoDelay(forward); // rotate the drill one more step without delay
   return moveAugerOneStep(forward); //and then move the auger and put in a delay.
 }
+
 
 //returns true if magnet was found.
 //returns false if all motions did not result in a magnet find.

@@ -1,7 +1,7 @@
 //Reference guide for drillDriver_v0.2b
 //  Replaces the global declare file.
 
-//Updated 4/13/2017.
+//Updated 4/15/2017.
 //Created 4/12/2017.
 //Author: Todd Oakes.    Samples provided by Elegoo.  
 //Credits in section X.
@@ -53,6 +53,10 @@
 
 // ----------- Sections: -----------
 // 00. CHANGELOG
+
+// UPDATE 4/15: Changed all the values to mimic final values for the auger.
+// All measurments are in inches.  Verified the auger and extractor movements.
+//  Still need the exact measurements.
 
 // UPDATE 4/13:  Began work on final motions, 
 //  but their dependencies (length data) is implemented as guesswork.
@@ -146,14 +150,15 @@ bool dir[] = {MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORWARD,MOTOR_FORW
 const double AUGER_PITCH_HEIGHT = 0.125; //pitch dia in inches
 const double AUGER_TOTAL_HEIGHT = 10; //height in inches
 const double AUGER_LENGTH = AUGER_TOTAL_HEIGHT / AUGER_PITCH_HEIGHT; //number of revolutions (maximum)
-const long AUGER_INITIAL_CLEANING_POSITION = AUGER_LENGTH * 0.5;  //number of revolutions to the cleaning position (from top)
-const long AUGER_DISTANCE_PER_REVOLUTION = 3; //pitch diameter in inches(? TODO check calculations)
-const long AUGER_CLEANING_POSITION = AUGER_INITIAL_CLEANING_POSITION * AUGER_DISTANCE_PER_REVOLUTION * stepsPerRevolution;
+const double AUGER_INITIAL_CLEANING_POSITION = AUGER_LENGTH * 0.5;  //number of revolutions to the cleaning position (from top)
+const long AUGER_CLEANING_POSITION = AUGER_INITIAL_CLEANING_POSITION * stepsPerRevolution;
 //coreExtractor
 const int CORE_ARM_MOTOR = 4; // pins 16-19
-const long CORE_EXTRACT_DISTANCE_PER_ROTATION = 30;//pitch diameter in inches(? TODO check calculations).
-const double CORE_EXTRACT_ARM_TOTAL_ROTATIONS = 2.5;
-const long CORE_EXTRACT_ARM_LENGTH = (long)(CORE_EXTRACT_ARM_TOTAL_ROTATIONS * stepsPerRevolution * CORE_EXTRACT_DISTANCE_PER_ROTATION);
+const double CORE_EXTRACT_PITCH_DIAMETER = 0.417; //inches
+const double CORE_EXTRACT_DISTANCE_PER_ROTATION = CORE_EXTRACT_PITCH_DIAMETER * PI;//circumfrence of the pitch.
+const double CORE_EXTRACT_ARM_WORM_GEAR_LENGTH = 10.000; //inches TODO change to a real measurement.
+const double CORE_EXTRACT_ARM_TOTAL_REVOLUTIONS = CORE_EXTRACT_ARM_WORM_GEAR_LENGTH / CORE_EXTRACT_PITCH_DIAMETER;
+const long CORE_EXTRACT_ARM_LENGTH = (long)(CORE_EXTRACT_ARM_TOTAL_REVOLUTIONS * stepsPerRevolution * CORE_EXTRACT_DISTANCE_PER_ROTATION);
 long coreExtractArmPosition = 0; //0 = extract position.  positive means it's moving away from the auger
 bool coreArmEndstop = false;
 //drillRotation
@@ -168,7 +173,7 @@ int  readNum = 0;
 const int MANUAL_DELAY = 500;
 //moveAuger
 const int AUGER_MOTOR = 0; //motor on pins 0-3.
-const long MAX_REVOLUTIONS = AUGER_LENGTH;
+const double MAX_REVOLUTIONS = AUGER_LENGTH;
 const long MAX_AUGER_STEPS = (stepsPerRevolution * MAX_REVOLUTIONS);// 25 full turns.
 const double AUGER_REVOLUTIONS_TO_EXTRACTION = AUGER_LENGTH * 0.2 ; //number of revolutions to the extraction position. (from top)
 const long AUGER_EXTRACTION_POSITION = (long)(stepsPerRevolution * AUGER_REVOLUTIONS_TO_EXTRACTION); //steps to extraction position.
@@ -249,12 +254,12 @@ void moveAugerDown(bool buttonPressed);
 void setTheSurface();
 long getAugerCurrentPosition();
 bool moveAugerToExtractionPosition();
+bool moveAugerToCleaningPosition();
 bool moveAugerToTheSurface();
 bool augerAtTop();
 //restoreDrill
 bool cleanDrill ();
 bool cleaningMovement();
-bool moveDrillIntoCleaningPosition();
 bool moveDrillAndAugerOneStep();
 //sparesPlateArm
 bool sparesPlateArmOneStepNoDelay(bool forward);

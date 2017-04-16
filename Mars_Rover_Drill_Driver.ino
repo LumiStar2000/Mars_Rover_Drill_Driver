@@ -13,7 +13,7 @@
 
 //DESCRIPTION:
 //  Drives a custom drill.  Design specs can be found at [insert site here].
-//  Full documentation and credits can be found in readme.txt.
+//  Full documentation and credits can be found in readme.h.
 
 
 //REQIREMENTS:

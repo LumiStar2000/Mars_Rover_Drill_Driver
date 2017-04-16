@@ -12,7 +12,7 @@
 //we should probably begin skipping steps if any of the previous steps failed.
 bool cleanDrill (){
   bool methodSucceeded;
-  methodSucceeded = moveDrillIntoCleaningPosition();
+  methodSucceeded = moveAugerToCleaningPosition();
   //snap cleaning blade into place:
   if(methodSucceeded){ methodSucceeded = activateSolenoids();  }
   // dump out if alignment failed.
@@ -32,38 +32,6 @@ bool cleaningMovement(){
    rotateDrill(MOTOR_FORWARD, lateralStepsPerStep -1); //rotate the drill 6 steps
     rotateDrillOneStepNoDelay(MOTOR_FORWARD); //6+1 = 7, no need for delay on last step.
     return moveAugerOneStep(!moveDrillDownwards); //moves down while cleaning.
-}
-
-bool moveDrillIntoCleaningPosition(){
-  //steps needed to move downwards to get to auger cleaning height.
-  //this number could be negative (need to move upwards)
-  long stepsToMoveDown = AUGER_CLEANING_HEIGHT - getAugerCurrentPosition();
-  bool moveDown = true;
-  if(stepsToMoveDown < 0){
-    stepsToMoveDown = (-1)*stepsToMoveDown;
-    moveDown = false;
-  }
-  //this number will always be positive.
-  long stepsToRotate = (stepsPerRevolution - getCurrentAlignment()) + AUGER_CLEANING_ROTATION;
-  
-  long stepCounter = 0;
-  
-  //first, spin them both until one aligns.
-  while(stepCounter < stepsToMoveDown && stepCounter < stepsToRotate){
-    moveDrillAndAugerOneStep(moveDown, MOTOR_FORWARD);
-    stepCounter++;
-  }
-  
-  //now spin whichever didn't finish.
-  while(stepCounter < stepsToMoveDown){
-    moveAugerOneStep(moveDown);
-    stepCounter++;
-  }
-  while(stepCounter < stepsToRotate){
-    if(!rotateDrillOneStep(MOTOR_FORWARD)){return true;} //TODO: replace all blind calls with if! dumps like this.
-  }
-
-  return true;
 }
 
 //returns true if both drills took one step.

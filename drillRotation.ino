@@ -49,6 +49,7 @@ bool rotateDrill(bool forward, long steps){
 
 //rotates the drill forward until it's aligned at the current position.
 // could be useful for aligning threads to screw on a new head.
+// pos can be any int from 0 to stepsPerRevolution (4096).
 bool rotateDrillForwardToAlignment(int pos){
   
   //dump out if alignment is impossible.

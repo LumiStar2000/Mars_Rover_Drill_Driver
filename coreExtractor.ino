@@ -7,13 +7,14 @@ bool coreExtractArmIn(){
   }
   return true;
 }
+
 //method to be used with a button checker to manually align motors.
 void coreExtractArmIn(bool movement){
   if(movement) {
     //attempt normal movement
-    if(!moveExtractionArmOneStep(!MOTOR_FORWARD)){ //if initial movement fails, Override.
+    if(!moveExtractionArmOneStep(MOTOR_FORWARD)){ //if initial movement fails, Override.
       coreExtractArmPosition = 1;// continuously set position to 1.
-      moveExtractionArmOneStep(!MOTOR_FORWARD); //this moves it down to 0.
+      moveExtractionArmOneStep(MOTOR_FORWARD); //this moves it down to 0.
     }//hopefully that's the only reason the movement failed.
   }
 }
@@ -23,29 +24,26 @@ void coreExtractArmIn(bool movement){
 void coreExtractArmOut(bool movement){
   if(movement){
     //attempt normal movement
-    if(!moveExtractionArmOneStep(MOTOR_FORWARD))
+    if(!moveExtractionArmOneStep(!MOTOR_FORWARD))
     {
       if(!coreArmNotAtMaxDistance()){
         //if the core arm IS at max distance, then set it to one less than it.
         //then move the motor.
         coreExtractArmPosition = CORE_EXTRACT_ARM_LENGTH-1;
-        if(!moveExtractionArmOneStep(MOTOR_FORWARD)){
+        if(!moveExtractionArmOneStep(!MOTOR_FORWARD)){
           Serial.println("Programming error in coreExtractArmOut");
         }
       }
-      }
     }
   }
+}
 
 
-//this is a straight up copypasta of the above method with a ! removed.
-//good job todd, you coded correctly!
 bool coreExtractArmOut(){
-  long maximumSteps = stepsPerRevolution * 6;//6 full rotations before movement gives up.
-  while((maximumSteps > 0) && moveExtractionArmOneStep(MOTOR_FORWARD))
-  {maximumSteps--;} //stop when movement fails or when maximum steps was reached.
-  
-  return (maximumSteps > 0); //returns true if it ended before maximum steps was reached.
+  while(coreArmNotAtMaxDistance()){
+    if(!moveExtractionArmOneStep(!MOTOR_FORWARD)){return false;}
+  }
+  return true;
   }
 
 //returns true if the movement succeeded.
