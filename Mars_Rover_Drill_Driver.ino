@@ -72,6 +72,17 @@ void setup() {
 
   
 }
+// MOVEMENT NOTES:
+//  Full 0: Epic zoom.
+//  Full 1: Removes head of drill to expose core, using sparesPlate as a ground
+//           Drill moves into place on spares plate, and rotates its head off by reverse rotation.
+//  Full 2: Core arm is extended fully at beginning.  Drill moves up, 
+//           core is moved out of the way by backwards movement then rotation. (90 degrees?)
+//  Full 3: Core flys off into space.
+//  Full 4: Core flys back in from space and is caught by the extraction arm.
+//  Full 5: Reverse motion of Full 2 (arm moves back into recessed drill, drill rotates back down)
+//  Full 6: Extraction arm moves out, drill moves down to sparesPlate, rotates onto it's head.
+//  Full 7: Corrupt
 
   //IDEA: Start the program with an "alignment phase", where I press 2 buttons to align the motors.
   //      Once the motor is aligned, hit both buttons at once to advance (or use a third button).
@@ -82,27 +93,27 @@ void loop() {
 
 // --- ALL METHODS MUST RETURN A BOOL OR INT ----
 // --- THIS IS ESSENTIAL TO ERROR DETECTION -----
-  //TODO 1. restore all objects to known positions
+  //1. restore all objects to known positions
    manualAlignment();
   
-  //TODO 2. Extend auger to magnetic alignment
+  //2. Extend auger to magnetic alignment
   alignAugerWithMagnet();
   
-  //TODO 3. Move drill down to surface. 
+  //3. Move drill down to surface. 
   moveAugerToTheSurface();
 
-  //TODO 4. Do a drilling motion, retrieve drill.
+  //4. Do a drilling motion, retrieve drill.
   long numberOfDrillingRevolutions = 8;
   rotateDrill(MOTOR_FORWARD, stepsPerRevolution * numberOfDrillingRevolutions); //
   //TODO any other steps after drilling (backing out maybe?)
   
-  //TODO 5. (need specifics) Remove core sample.
+  //5. (need specifics) Remove core sample.
   //   5.1. Move grabber in, move auger up significantly, move grabber out, dump sample, restore positions.
   moveAugerToExtractionPosition();
   coreExtractArmIn();
   //TODO finish extraction steps
 
-  //TODO 6. Move auger to cleaning position
+  //6. Move auger to cleaning position
   //   6.1. Activate solenoids, rotate drill SLOWLY.   
   cleanDrill();
   

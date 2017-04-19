@@ -36,6 +36,21 @@ bool rotateDrillOneStep(bool forward){
   return true;
 }
 
+//if the button is active, go forward.
+bool rotateDrillForward(bool buttonOn){
+  if(buttonOn) {
+    return rotateDrillOneStep(MOTOR_FORWARD);
+  } 
+  return false;
+}
+
+//if the button is active, go backward.
+bool rotateDrillBackward(bool buttonOn){
+  if(buttonOn){
+    return rotateDrillOneStep(!MOTOR_FORWARD);
+  }
+}
+
 //allows rapid drilling.
 bool rotateDrill(bool forward, long steps){
   dir[DRILL_MOTOR] = forward;
@@ -67,6 +82,16 @@ bool rotateDrillForwardToAlignment(int pos){
 //returns current alignment.
 int getCurrentAlignment(){
   return drillPosition;
+}
+
+//if its within POSITION_TOLERANCE rotations of SPARES_ANGULAR_POSITION, return true.
+//  currently means if it's +-5 rotations (0.44 degrees)
+bool readyForSpare(){
+  if(drillPosition >= (SPARES_ANGULAR_POSITION - ANGULAR_POSITION_TOLERANCE) &&
+      drillPosition <= (SPARES_ANGULAR_POSITION + ANGULAR_POSITION_TOLERANCE)){
+        return true;
+      }
+  return false;
 }
 
 
