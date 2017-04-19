@@ -1,4 +1,4 @@
-//Reference guide for drillDriver_v0.2b
+//Reference guide for drillDriver_v0.3b
 //  Replaces the global declare file.
 
 //Updated 4/13/2017.
@@ -59,6 +59,11 @@
 //  Updated TOC references to reflect removal of
 //   specific sections that had been deleted 
 //   due to conflicts with Github and readme.h integration (this is the main header)
+//  Added ability to align drill to a specific rotation, aligned core rotation to 90 degrees.
+//  Added MOVEMENT NOTES:
+//  TODO: ensure movement methods produce results expected from full() animations.
+//  TODO: FIX sparesPlateArm to become coreExtractionRotation.
+//  TODO: finalize sizes and alignment tolerance.
 
 // UPDATE 4/13:  Began work on final motions, 
 //  but their dependencies (length data) is implemented as guesswork.
@@ -166,9 +171,9 @@ long coreExtractArmPosition = 0; //0 = extract position.  positive means it's mo
 bool coreArmEndstop = false;
 //drillRotation
 const int DRILL_MOTOR = 1; //pins 4-7
-const int SPARES_ANGULAR_POSITION = 0;
 const int ANGULAR_POSITION_TOLERANCE = 5;
 int drillPosition = 0;
+int SPARES_ANGULAR_POSITION = 0; // between 0 and stepsPerRevolution
 //magneticDriver
 int  hallSensorPin  =  A0;   
 int  sensorValue =  0; 

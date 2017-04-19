@@ -1,7 +1,7 @@
 // See readme.ino for Full Documentation and credits.
 #include "readme.h"
 //     Mars Rover Drill Driver 
-//          Version: v0.2b
+//          Version: v0.3b
 //      Last edited: 04/12/17
 //    Last verified: 03/31/17  
 //           Author: Todd Oakes
